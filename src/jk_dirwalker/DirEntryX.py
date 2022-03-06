@@ -47,7 +47,7 @@ class DirEntryX(jk_prettyprintobj.DumpMixin):
 	################################################################################################################################
 
 	@property
-	def hasError(self) -> bool:
+	def isError(self) -> bool:
 		return bool(self.exception)
 	#
 

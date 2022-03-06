@@ -1,6 +1,7 @@
 
 
 import os
+from subprocess import call
 import typing
 
 import jk_typing
@@ -28,21 +29,42 @@ class DirWalker(jk_prettyprintobj.DumpMixin):
 	@jk_typing.checkFunctionSignature()
 	def __init__(self,
 			*args,
-			emitFilter:EmitFilter = None,
-			descendFilter:DescendFilter = None,
+			emitFilter:typing.Union[EmitFilter,typing.Callable[[DirEntryX],bool]] = None,
+			descendFilter:typing.Union[DescendFilter,typing.Callable[[DirEntryX],bool]] = None,
+			raiseErrors:bool = True,
 		):
 
 		assert not args
 
 		# ----
 
+		self.__raiseErrors = raiseErrors
+
+		# ----
+
 		if emitFilter is None:
-			emitFilter = EmitFilter()
-		self.__emitFilter = emitFilter
+			self.__emitFilter = EmitFilter()
+			self.__emitFilterCallback = self.__emitFilter.checkEmit
+		elif isinstance(emitFilter, EmitFilter):
+			self.__emitFilter = emitFilter
+			self.__emitFilterCallback = emitFilter.checkEmit
+		elif callable(emitFilter):
+			self.__emitFilter = EmitFilter()
+			self.__emitFilterCallback = emitFilter
+		else:
+			raise Exception()
+
+		# ----
 
 		if descendFilter is None:
-			descendFilter = DescendFilter()
-		self.__descendFilter = descendFilter
+			self.__descendFilter = DescendFilter()
+			self.__descendFilterCallback = self.__descendFilter.checkDescend
+		elif isinstance(descendFilter, DescendFilter):
+			self.__descendFilterCallback = descendFilter.checkDescend
+		elif callable(descendFilter):
+			self.__descendFilterCallback = descendFilter
+		else:
+			raise Exception()
 	#
 
 	################################################################################################################################
@@ -56,7 +78,12 @@ class DirWalker(jk_prettyprintobj.DumpMixin):
 
 	@property
 	def descendFilter(self) -> DescendFilter:
-		return self.__descendFilter
+		return self.__descendFilterCallback
+	#
+
+	@property
+	def raiseErrors(self) -> bool:
+		return self.__raiseErrors
 	#
 
 	################################################################################################################################
@@ -67,33 +94,33 @@ class DirWalker(jk_prettyprintobj.DumpMixin):
 		return [
 			"emitFilter",
 			"descendFilter",
+			"raiseErrors",
 		]
 	#
 
-	@staticmethod
 	def __walk0(
+			self,
 			ctx:_WalkCtx,
 			absWalkDirPath:str,
 			relWalkDirPath:str,
-			emitFilter:EmitFilter,
-			walkFilter:DescendFilter,
 			parentDirEntry:DirEntryX,
 		) -> typing.Iterable[os.DirEntry]:
 
 		assert isinstance(ctx, _WalkCtx)
 		assert isinstance(absWalkDirPath, str)
 		assert isinstance(relWalkDirPath, str)
-		assert isinstance(emitFilter, EmitFilter)
-		assert isinstance(walkFilter, DescendFilter)
 		assert isinstance(parentDirEntry, DirEntryX)
 
-		try:
+		if self.__raiseErrors:
 			allEntries = list(os.scandir(absWalkDirPath))
-		except PermissionError as ee:
-			parentDirEntry.exception = ee
-			if emitFilter.emitErrors:
-				yield parentDirEntry
-			return
+		else:
+			try:
+				allEntries = list(os.scandir(absWalkDirPath))
+			except PermissionError as ee:
+				parentDirEntry.exception = ee
+				if self.__emitFilter.emitErrors:
+					yield parentDirEntry
+				return
 
 		# ----
 
@@ -103,12 +130,12 @@ class DirWalker(jk_prettyprintobj.DumpMixin):
 			relPath = os.path.join(relWalkDirPath, fe.name)
 
 			_entry = DirEntryX.fromOSDirEntry(ctx.baseDirPath, relPath, fe)
-			if emitFilter.checkEmit(_entry):
+			if self.__emitFilterCallback(_entry):
 				yield _entry
 
 			if _entry.is_dir():
-				if walkFilter.checkDescend(_entry):
-					yield from DirWalker.__walk0(ctx, fe.path, relPath, emitFilter, walkFilter, _entry)
+				if self.__descendFilterCallback(_entry):
+					yield from self.__walk0(ctx, fe.path, relPath, _entry)
 	#
 
 	################################################################################################################################
@@ -133,12 +160,10 @@ class DirWalker(jk_prettyprintobj.DumpMixin):
 		if self.__emitFilter.emitWalkRoot:
 			yield subEntry
 
-		yield from DirWalker.__walk0(
+		yield from self.__walk0(
 			_WalkCtx(dirPath),
 			dirPath,
 			"",
-			self.__emitFilter,
-			self.__descendFilter,
 			subEntry,
 		)
 	#

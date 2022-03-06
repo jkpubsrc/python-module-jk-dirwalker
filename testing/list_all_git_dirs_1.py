@@ -6,6 +6,8 @@ import jk_dirwalker
 
 
 
+
+
 class GitWalkFilter(jk_dirwalker.DescendFilter):
 
 	def checkDescend(self, entry:jk_dirwalker.DirEntryX) -> bool:

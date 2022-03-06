@@ -18,7 +18,7 @@ class EmitFilter(object):
 	################################################################################################################################
 
 	def __init__(self,
-			emitWalkRoot:bool = True,
+			emitWalkRoot:bool = False,
 			emitErrors:bool = True,
 		) -> bool:
 
