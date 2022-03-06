@@ -30,9 +30,9 @@ class DirEntryX(jk_prettyprintobj.DumpMixin):
 	# @param	os.DirEntry fe		The file entry object.
 	#
 	@jk_typing.checkFunctionSignature()
-	def __init__(self, absBaseDirPath:str, relFilePath:str, fileName:str, absFilePath:str, statResult:os.stat_result, exception:Exception = None):
+	def __init__(self, nLevel:int, absBaseDirPath:str, relFilePath:str, fileName:str, absFilePath:str, statResult:os.stat_result, exception:Exception = None):
 		self.absBaseDirPath = absBaseDirPath
-
+		self.nLevel = nLevel
 		self.exception = exception
 		self.__statResult = statResult
 		self.name = fileName
@@ -160,6 +160,7 @@ class DirEntryX(jk_prettyprintobj.DumpMixin):
 			"relFilePath",
 			"fileName",
 			"typeStr",
+			"nLevel",
 			"size",
 			"uid",
 			"gid",
@@ -240,8 +241,9 @@ class DirEntryX(jk_prettyprintobj.DumpMixin):
 	################################################################################################################################
 
 	@staticmethod
-	def fromOSDirEntry(absBaseDirPath:str, relFilePath:str, fe:os.DirEntry, exception:Exception = None):
+	def fromOSDirEntry(nLevel:int, absBaseDirPath:str, relFilePath:str, fe:os.DirEntry, exception:Exception = None):
 		return DirEntryX(
+			nLevel = nLevel,
 			absBaseDirPath = absBaseDirPath,
 			relFilePath = relFilePath,
 			fileName = fe.name,
@@ -251,13 +253,14 @@ class DirEntryX(jk_prettyprintobj.DumpMixin):
 		)
 	#
 
-	def fromPath(absBaseDirPath:str, absFilePath:str):
+	def fromPath(nLevel:int, absBaseDirPath:str, absFilePath:str):
 		if not absBaseDirPath.endswith(os.sep):
 			_baseDirPath2 = absBaseDirPath + os.sep
 		else:
 			_baseDirPath2 = absBaseDirPath
 
 		return DirEntryX(
+			nLevel = nLevel,
 			absBaseDirPath = absBaseDirPath,
 			relFilePath = absFilePath[len(_baseDirPath2):],
 			fileName = os.path.basename(absFilePath),

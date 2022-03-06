@@ -101,6 +101,7 @@ class DirWalker(jk_prettyprintobj.DumpMixin):
 	def __walk0(
 			self,
 			ctx:_WalkCtx,
+			nLevel:int,
 			absWalkDirPath:str,
 			relWalkDirPath:str,
 			parentDirEntry:DirEntryX,
@@ -129,13 +130,13 @@ class DirWalker(jk_prettyprintobj.DumpMixin):
 
 			relPath = os.path.join(relWalkDirPath, fe.name)
 
-			_entry = DirEntryX.fromOSDirEntry(ctx.baseDirPath, relPath, fe)
+			_entry = DirEntryX.fromOSDirEntry(nLevel, ctx.baseDirPath, relPath, fe)
 			if self.__emitFilterCallback(_entry):
 				yield _entry
 
 			if _entry.is_dir():
 				if self.__descendFilterCallback(_entry):
-					yield from self.__walk0(ctx, fe.path, relPath, _entry)
+					yield from self.__walk0(ctx, nLevel+1, fe.path, relPath, _entry)
 	#
 
 	################################################################################################################################
@@ -156,12 +157,13 @@ class DirWalker(jk_prettyprintobj.DumpMixin):
 
 		# ----
 
-		subEntry = DirEntryX.fromPath(dirPath, dirPath)
+		subEntry = DirEntryX.fromPath(-1, dirPath, dirPath)
 		if self.__emitFilter.emitWalkRoot:
 			yield subEntry
 
 		yield from self.__walk0(
 			_WalkCtx(dirPath),
+			0,
 			dirPath,
 			"",
 			subEntry,
