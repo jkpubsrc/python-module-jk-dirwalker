@@ -10,7 +10,7 @@ from .DescendFilter import DescendFilter
 from .EmitFilter import EmitFilter
 from .StdEmitFilter import StdEmitFilter
 
-from .Walker import Walker
+from .DirWalker import DirWalker
 
 
 
@@ -20,7 +20,7 @@ def scandir(
 		emitFilter:EmitFilter = None,
 		descendFilter:DescendFilter = None,
 	):
-	yield from Walker(
+	yield from DirWalker(
 		emitFilter=emitFilter,
 		descendFilter=descendFilter,
 	).scandir(dirPath)
@@ -32,7 +32,7 @@ def listdir(
 		emitFilter:EmitFilter = None,
 		descendFilter:DescendFilter = None,
 	):
-	yield from Walker(
+	yield from DirWalker(
 		emitFilter=emitFilter,
 		descendFilter=descendFilter,
 	).listdir(dirPath)

@@ -6,7 +6,7 @@ import jk_dirwalker
 
 
 
-walker = jk_dirwalker.Walker(
+walker = jk_dirwalker.DirWalker(
 	emitFilter = jk_dirwalker.StdEmitFilter(
 		emitSymLinks			= False,
 		emitBlockDevices		= True,

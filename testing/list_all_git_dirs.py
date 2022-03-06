@@ -24,7 +24,7 @@ class GitEmitFilter(jk_dirwalker.EmitFilter):
 
 
 
-walkDirs = jk_dirwalker.Walker(
+walkDirs = jk_dirwalker.DirWalker(
 	emitFilter = GitEmitFilter(),
 	descendFilter = GitWalkFilter(),
 )

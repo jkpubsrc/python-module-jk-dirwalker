@@ -16,7 +16,7 @@ from .DescendFilter import DescendFilter
 
 
 
-class Walker(jk_prettyprintobj.DumpMixin):
+class DirWalker(jk_prettyprintobj.DumpMixin):
 
 	################################################################################################################################
 	## Constructor
@@ -108,7 +108,7 @@ class Walker(jk_prettyprintobj.DumpMixin):
 
 			if _entry.is_dir():
 				if walkFilter.checkDescend(_entry):
-					yield from Walker.__walk0(ctx, fe.path, relPath, emitFilter, walkFilter, _entry)
+					yield from DirWalker.__walk0(ctx, fe.path, relPath, emitFilter, walkFilter, _entry)
 	#
 
 	################################################################################################################################
@@ -133,7 +133,7 @@ class Walker(jk_prettyprintobj.DumpMixin):
 		if self.__emitFilter.emitWalkRoot:
 			yield subEntry
 
-		yield from Walker.__walk0(
+		yield from DirWalker.__walk0(
 			_WalkCtx(dirPath),
 			dirPath,
 			"",
