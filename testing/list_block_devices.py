@@ -19,7 +19,7 @@ walker = jk_dirwalker.Walker(
 		emitOthers				= False,
 	),
 )
-for x in walker.walk("/dev"):
+for x in walker.scandir("/dev"):
 	print(repr(x))
 
 

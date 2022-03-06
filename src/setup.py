@@ -19,17 +19,19 @@ setup(
 	author = "Jürgen Knauth",
 	author_email = "pubsrc@binary-overflow.de",
 	classifiers = [
-		"Development Status :: 3 - Alpha",
+		"Development Status :: 4 - Beta",
 		"Programming Language :: Python :: 3",
 	],
 	description = "Recursively iterates over files and directories in a directory tree",
 	include_package_data = False,
 	install_requires = [
+		"jk_typing",
+		"jk_prettyprintobj",
 	],
 	keywords = [
 		"...",
 	],
-	license = "proprietary",
+	license = "apache2",
 	name = "jk_dirwalker",
 	packages = [
 		"jk_dirwalker",

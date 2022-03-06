@@ -14,7 +14,7 @@ from .Walker import Walker
 
 
 
-def walk(
+def scandir(
 		dirPath:str,
 		*,
 		emitFilter:EmitFilter = None,
@@ -23,7 +23,19 @@ def walk(
 	yield from Walker(
 		emitFilter=emitFilter,
 		descendFilter=descendFilter,
-	).walk(dirPath)
+	).scandir(dirPath)
+#
+
+def listdir(
+		dirPath:str,
+		*,
+		emitFilter:EmitFilter = None,
+		descendFilter:DescendFilter = None,
+	):
+	yield from Walker(
+		emitFilter=emitFilter,
+		descendFilter=descendFilter,
+	).listdir(dirPath)
 #
 
 

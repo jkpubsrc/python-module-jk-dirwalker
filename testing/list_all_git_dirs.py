@@ -28,7 +28,7 @@ walkDirs = jk_dirwalker.Walker(
 	emitFilter = GitEmitFilter(),
 	descendFilter = GitWalkFilter(),
 )
-for x in walkDirs.walk("~/DevOS/PythonModules"):
+for x in walkDirs.scandir("~/DevOS/PythonModules"):
 	print(repr(x))
 
 

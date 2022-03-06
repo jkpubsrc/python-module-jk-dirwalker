@@ -115,7 +115,12 @@ class Walker(jk_prettyprintobj.DumpMixin):
 	## Public Methods
 	################################################################################################################################
 
-	def walk(self, dirPath:str) -> typing.Iterable[DirEntryX]:
+	def listdir(self, dirPath:str) -> typing.Iterable[str]:
+		for x in self.scandir(dirPath):
+			yield x.relFilePath
+	#
+
+	def scandir(self, dirPath:str) -> typing.Iterable[DirEntryX]:
 		assert isinstance(dirPath, str)
 		dirPath = os.path.expanduser(dirPath)
 		assert os.path.isdir(dirPath)
