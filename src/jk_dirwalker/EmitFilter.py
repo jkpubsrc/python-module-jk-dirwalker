@@ -4,6 +4,8 @@
 import os
 import typing
 
+import jk_prettyprintobj
+
 from .DirEntryX import DirEntryX
 
 
@@ -11,7 +13,7 @@ from .DirEntryX import DirEntryX
 
 
 
-class EmitFilter(object):
+class EmitFilter(jk_prettyprintobj.DumpMixin):
 
 	################################################################################################################################
 	## Constructor
@@ -20,7 +22,7 @@ class EmitFilter(object):
 	def __init__(self,
 			emitWalkRoot:bool = False,
 			emitErrors:bool = True,
-		) -> bool:
+		) -> None:
 
 		assert isinstance(emitWalkRoot, bool)
 		assert isinstance(emitErrors, bool)
@@ -36,6 +38,13 @@ class EmitFilter(object):
 	################################################################################################################################
 	## Helper Methods
 	################################################################################################################################
+
+	def _dumpVarNames(self) -> list:
+		return [
+			"emitWalkRoot",
+			"emitErrors",
+		]
+	#
 
 	################################################################################################################################
 	## Public Methods

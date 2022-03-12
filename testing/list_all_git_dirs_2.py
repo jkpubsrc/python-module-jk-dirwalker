@@ -2,13 +2,15 @@
 
 
 
+import typing
+
 import jk_dirwalker
 
 
 
 
 
-def gitStopDescendingFilter(entry:jk_dirwalker.DirEntryX) -> bool:
+def gitStopDescendingFilter(allEntries:typing.Dict[str,jk_dirwalker.DirEntryX], entry:jk_dirwalker.DirEntryX) -> bool:
 	return entry.fileName != ".git"
 #
 

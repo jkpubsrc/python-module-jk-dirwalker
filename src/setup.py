@@ -36,7 +36,7 @@ setup(
 	packages = [
 		"jk_dirwalker",
 	],
-	version = "0.2022.3.6",
+	version = "0.2022.3.12",
 	zip_safe = False,
 	long_description = readme(),
 	long_description_content_type="text/markdown",

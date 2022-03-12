@@ -1,7 +1,7 @@
 ﻿
 
 
-__version__ = "0.2022.3.6"
+__version__ = "0.2022.3.12"
 
 
 
@@ -37,7 +37,6 @@ def listdir(
 		descendFilter=descendFilter,
 	).listdir(dirPath)
 #
-
 
 
 

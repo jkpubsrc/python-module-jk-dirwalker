@@ -4,6 +4,8 @@
 import os
 import typing
 
+import jk_prettyprintobj
+
 from .DirEntryX import DirEntryX
 
 
@@ -11,7 +13,7 @@ from .DirEntryX import DirEntryX
 
 
 
-class DescendFilter(object):
+class DescendFilter(jk_prettyprintobj.DumpMixin):
 
 	################################################################################################################################
 	## Constructor
@@ -25,11 +27,15 @@ class DescendFilter(object):
 	## Helper Methods
 	################################################################################################################################
 
+	def _dumpVarNames(self) -> list:
+		return []
+	#
+
 	################################################################################################################################
 	## Public Methods
 	################################################################################################################################
 
-	def checkDescend(self, entry:DirEntryX) -> bool:
+	def checkDescend(self, allEntries:typing.Dict[str,DirEntryX], entry:DirEntryX) -> bool:
 		return True
 	#
 

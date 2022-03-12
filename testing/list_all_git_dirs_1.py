@@ -2,6 +2,8 @@
 
 
 
+import typing
+
 import jk_dirwalker
 
 
@@ -10,7 +12,7 @@ import jk_dirwalker
 
 class GitWalkFilter(jk_dirwalker.DescendFilter):
 
-	def checkDescend(self, entry:jk_dirwalker.DirEntryX) -> bool:
+	def checkDescend(self, allEntries:typing.Dict[str,jk_dirwalker.DirEntryX], entry:jk_dirwalker.DirEntryX) -> bool:
 		return entry.fileName != ".git"
 	#
 

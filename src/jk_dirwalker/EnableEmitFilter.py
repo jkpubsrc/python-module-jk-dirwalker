@@ -4,8 +4,6 @@
 import os
 import typing
 
-import jk_typing
-
 from .DirEntryX import DirEntryX
 from .EmitFilter import EmitFilter
 
@@ -14,24 +12,23 @@ from .EmitFilter import EmitFilter
 
 
 
-class StdEmitFilter(EmitFilter):
+class EnableEmitFilter(EmitFilter):
 
 	################################################################################################################################
 	## Constructor
 	################################################################################################################################
 
-	@jk_typing.checkFunctionSignature()
 	def __init__(self,
-			emitWalkRoot:bool = True,
-			emitDirectories:bool = True,
-			emitRegularFiles:bool = True,
-			emitSymLinks:bool = True,
-			emitBlockDevices:bool = True,
-			emitCharacterDevices:bool = True,
-			emitSockets:bool = True,
-			emitFIFOs:bool = True,
-			emitOthers:bool = True,
-			emitErrors:bool = True,
+			emitWalkRoot:bool = False,
+			emitDirectories:bool = False,
+			emitRegularFiles:bool = False,
+			emitSymLinks:bool = False,
+			emitBlockDevices:bool = False,
+			emitCharacterDevices:bool = False,
+			emitSockets:bool = False,
+			emitFIFOs:bool = False,
+			emitOthers:bool = False,
+			emitErrors:bool = False,
 		) -> None:
 
 		super().__init__(
@@ -56,21 +53,6 @@ class StdEmitFilter(EmitFilter):
 	################################################################################################################################
 	## Helper Methods
 	################################################################################################################################
-
-	def _dumpVarNames(self) -> list:
-		return [
-			"emitWalkRoot",
-			"emitDirectories",
-			"emitRegularFiles",
-			"emitSymLinks",
-			"emitBlockDevices",
-			"emitCharacterDevices",
-			"emitSockets",
-			"emitFIFOs",
-			"emitOthers",
-			"emitErrors",
-		]
-	#
 
 	################################################################################################################################
 	## Public Methods
@@ -104,34 +86,6 @@ class StdEmitFilter(EmitFilter):
 		else:
 			entry.dump()
 			raise Exception()
-	#
-
-	@staticmethod
-	def newFromDisabled(
-			emitWalkRoot:bool = False,
-			emitDirectories:bool = False,
-			emitRegularFiles:bool = False,
-			emitSymLinks:bool = False,
-			emitBlockDevices:bool = False,
-			emitCharacterDevices:bool = False,
-			emitSockets:bool = False,
-			emitFIFOs:bool = False,
-			emitOthers:bool = False,
-			emitErrors:bool = False,
-		):
-
-		return StdEmitFilter(
-			emitWalkRoot = emitWalkRoot,
-			emitDirectories = emitDirectories,
-			emitRegularFiles = emitRegularFiles,
-			emitSymLinks = emitSymLinks,
-			emitBlockDevices = emitBlockDevices,
-			emitCharacterDevices = emitCharacterDevices,
-			emitSockets = emitSockets,
-			emitFIFOs = emitFIFOs,
-			emitOthers = emitOthers,
-			emitErrors = emitErrors,
-		)
 	#
 
 #
