@@ -49,7 +49,7 @@ class DirWalker(jk_prettyprintobj.DumpMixin):
 			self.__emitFilter = emitFilter
 			self.__emitFilterCallback = emitFilter.checkEmit
 		elif callable(emitFilter):
-			self.__emitFilter = None
+			self.__emitFilter = EmitFilter()
 			self.__emitFilterCallback = emitFilter
 		else:
 			raise Exception()
