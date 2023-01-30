@@ -1,64 +1,41 @@
 {
 	"magic": {
 		"magic": "packageinfo",
-		"version": 2,
+		"version": 2
 	},
 	"meta": {
-		"name": "jk_dirwalker",
-		"version": "0.2022.3.12",
-		"packageClass": "python-module",
-		"language": "python3",
+		"authors": [
+			{
+				"email": "pubsrc@binary-overflow.de",
+				"name": "J\u00fcrgen Knauth"
+			}
+		],
+		"description": "Recursively iterates over files and directories in a directory tree",
 		"development_status": "beta",
-		"license": "apache2",
 		"keywords": [
 			"..."
 		],
-		"description": "Recursively iterates over files and directories in a directory tree",
-		"authors": [
-			{
-				"name": "Jürgen Knauth",
-				"email": "pubsrc@binary-overflow.de"
-			}
-		],
+		"language": "python3",
+		"license": "Apache2",
+		"name": "jk_dirwalker",
+		"packageClass": "python-module",
+		"version": "0.2023.1.30"
 	},
 	"requirements": {
+		"htmlcssjs_packages": [],
 		"python_packages": [
 			"jk_typing",
-			"jk_prettyprintobj",
+			"jk_prettyprintobj"
 		],
-		"python_packages_dev": [
-		],
-		"system_apt_packages": [
-		],
+		"python_packages_dev": [],
+		"python_packages_recommended": [],
+		"system_apt_packages": []
 	},
 	"source": {
+		"extra_binary_files": [],
+		"extra_data_files": [],
 		"packages": [
-			"jk_dirwalker",
-		],
-		"extra_data_files": [
-		],
-		"extra_binary_files": [
+			"jk_dirwalker"
 		]
-	},
-	"documentation": [
-		/*
-		"wiki": {
-			"page": "DevDocs:jk_dirwalker"
-		}
-		*/
-	],
-	"repositories": [
-		{
-			"type": "github",
-			"user": "jkpubsrc",
-			"project": "........",
-			"devon_publish": false
-		},
-		{
-			"type": "pypi",
-			"project": "........",
-			"devon_publish": false
-		}
-	],
+	}
 }
-

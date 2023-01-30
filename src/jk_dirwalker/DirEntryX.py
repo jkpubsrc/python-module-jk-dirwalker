@@ -25,9 +25,9 @@ class DirEntryX(jk_prettyprintobj.DumpMixin):
 	#
 	# Constructor method.
 	#
-	# @param	str baseDirPath		The base directory of the scanning process
-	# @param	str relFilePath		The path of the element relative to the base directory path.
-	# @param	os.DirEntry fe		The file entry object.
+	# @param	str absBaseDirPath		The base directory of the scanning process
+	# @param	str relFilePath			The path of the element relative to the base directory path.
+	# @param	os.DirEntry fe			The file entry object.
 	#
 	@jk_typing.checkFunctionSignature()
 	def __init__(self,
@@ -54,6 +54,12 @@ class DirEntryX(jk_prettyprintobj.DumpMixin):
 	################################################################################################################################
 	## Public Properties
 	################################################################################################################################
+
+	@property
+	def fileExt(self) -> str:
+		_, ext = os.path.splitext(self.fileName)
+		return ext
+	#
 
 	@property
 	def isError(self) -> bool:

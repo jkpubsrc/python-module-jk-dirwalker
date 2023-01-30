@@ -20,10 +20,11 @@ setup(
 	author_email = "pubsrc@binary-overflow.de",
 	classifiers = [
 		"Development Status :: 4 - Beta",
+		"License :: OSI Approved :: Apache Software License",
 		"Programming Language :: Python :: 3",
 	],
 	description = "Recursively iterates over files and directories in a directory tree",
-	include_package_data = False,
+	include_package_data = True,
 	install_requires = [
 		"jk_typing",
 		"jk_prettyprintobj",
@@ -31,13 +32,19 @@ setup(
 	keywords = [
 		"...",
 	],
-	license = "apache2",
+	license = "Apache2",
 	name = "jk_dirwalker",
+	package_data = {
+		"": [
+		],
+	},
 	packages = [
 		"jk_dirwalker",
 	],
-	version = "0.2022.3.12",
+	scripts = [
+	],
+	version = '0.2023.1.30',
 	zip_safe = False,
 	long_description = readme(),
-	long_description_content_type="text/markdown",
+	long_description_content_type = "text/markdown",
 )
