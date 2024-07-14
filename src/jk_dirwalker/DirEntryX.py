@@ -14,7 +14,9 @@ import jk_prettyprintobj
 
 
 
-
+#
+# A directory entry. This is a replacement for <c>os.DirEntry</c>.
+#
 @typing.final
 class DirEntryX(jk_prettyprintobj.DumpMixin):
 
@@ -164,16 +166,23 @@ class DirEntryX(jk_prettyprintobj.DumpMixin):
 			return "other"
 	#
 
+	@property
+	def absDirPath(self) -> str:
+		return os.path.dirname(self.absPath)
+	#
+
 	################################################################################################################################
 	## Helper Methods
 	################################################################################################################################
 
 	def _dumpVarNames(self) -> list:
 		return [
-			"absFilePath",
+			"path",
+			"absPath",
 			"absBaseDirPath",
-			"relFilePath",
+			"relPath",
 			"fileName",
+			"absDirPath",
 			"typeStr",
 			"nLevel",
 			"size",

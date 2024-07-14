@@ -2,7 +2,7 @@
 
 
 __author__ = "Jürgen Knauth"
-__version__ = "0.2023.1.30"
+__version__ = "0.2024.7.13"
 
 
 
@@ -11,6 +11,7 @@ from .DescendFilter import DescendFilter
 from .EmitFilter import EmitFilter
 from .StdEmitFilter import StdEmitFilter
 from .FileExtEmitFilter import FileExtEmitFilter
+from .FileNameEmitFilter import FileNameEmitFilter
 
 from .DirWalker import DirWalker
 

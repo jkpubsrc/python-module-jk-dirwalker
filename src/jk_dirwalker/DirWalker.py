@@ -26,6 +26,10 @@ class DirWalker(jk_prettyprintobj.DumpMixin):
 	#
 	# Constructor method.
 	#
+	# @param	bool raiseErrors			If <c>true</c> (= default) raises an error if a file or directory is encountered
+	#										that can't be analyzed (e.g. because of insufficient permissions). If <c>false</c>
+	#										is specified a special error entry is generated without terminating the directory walk.
+	#
 	@jk_typing.checkFunctionSignature()
 	def __init__(self,
 			*args,

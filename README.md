@@ -4,20 +4,15 @@ jk_dirwalker
 Introduction
 ------------
 
-This python module ...
+This python module recursively iterates over files and directories in a directory tree.
 
 Information about this module can be found here:
 
-* [github.org](https://github.com/jkpubsrc/....)
+* [github.org](https://github.com/jkpubsrc/python-module-jk-dirwalker)
 * [pypi.python.org](https://pypi.python.org/pypi/jk_dirwalker)
 
 Why this module?
 ----------------
-
-...
-
-Limitations of this module
---------------------------
 
 ...
 

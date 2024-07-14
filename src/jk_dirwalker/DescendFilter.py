@@ -12,7 +12,11 @@ from .DirEntryX import DirEntryX
 
 
 
-
+#
+# Base class to implement checks if a descent into a directory should be performed.
+#
+# By default this class always returns <c>true</c>.
+#
 class DescendFilter(jk_prettyprintobj.DumpMixin):
 
 	################################################################################################################################
