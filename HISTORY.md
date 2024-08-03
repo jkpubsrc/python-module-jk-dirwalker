@@ -16,3 +16,7 @@
 * 2024-07-13
 	* Migrated to pyproject.toml
 
+* 2024-08-03
+	* Added: StdDescendFilter
+
+
