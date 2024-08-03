@@ -37,9 +37,9 @@ class StdDescendFilter(DescendFilter):
 		) -> None:
 		super().__init__()
 
-		self.__excludeExact = set(excludeExact)
-		self.__excludePrefix = list(excludePrefix)
-		self.__excludePostfix = list(excludePostfix)
+		self.__excludeExact = set(excludeExact) if excludeExact else None
+		self.__excludePrefix = list(excludePrefix) if excludePrefix else None
+		self.__excludePostfix = list(excludePostfix) if excludePostfix else None
 	#
 
 	################################################################################################################################
