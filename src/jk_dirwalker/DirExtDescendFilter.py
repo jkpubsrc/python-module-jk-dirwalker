@@ -1,55 +1,65 @@
 
 
 
-import os
 import typing
-
-import jk_prettyprintobj
-import jk_typing
 
 from .DirEntryX import DirEntryX
 from .DescendFilter import DescendFilter
+from .ExtensionMatcher import ExtensionMatcher
 
 
 
 
 
 #
-# Base class to implement checks if a descent into a directory should be performed.
+# This class will check if a directory is excluded or included by extension.
+# Excludes have precedence over includes: You can exclude certain extensions while still using a list of included extensions.
 #
-# By default this class always returns <c>true</c>.
-#
-class StdDescendFilter(DescendFilter):
+class DirExtDescendFilter(DescendFilter):
 
 	################################################################################################################################
 	## Constructor
 	################################################################################################################################
 
+	def __init__(self,
+			*args,
+			excludeExts:typing.Union[typing.Iterable[str],ExtensionMatcher,None] = None,
+			includeExts:typing.Union[typing.Iterable[str],ExtensionMatcher,None] = None,
+		):
+		if args:
+			raise Exception("Please use named arguments only!")
+
+		# ----
+
+		if excludeExts is None:
+			self.__excludeExts = None
+		else:
+			if isinstance(excludeExts, ExtensionMatcher):
+				self.__excludeExts = excludeExts
+			else:
+				self.__excludeExts = ExtensionMatcher(excludeExts)
+
+		# ----
+
+		if includeExts is None:
+			self.__includeExts = None
+		else:
+			if isinstance(includeExts, ExtensionMatcher):
+				self.__includeExts = includeExts
+			else:
+				self.__includeExts = ExtensionMatcher(includeExts)
+	#
+
 	################################################################################################################################
 	## Public Properties
 	################################################################################################################################
-
-	@jk_typing.checkFunctionSignature()
-	def __init__(self,
-			excludeExact:typing.Union[typing.List[str],typing.Tuple[str]] = None,
-			excludePrefix:typing.Union[typing.List[str],typing.Tuple[str]] = None,
-			excludePostfix:typing.Union[typing.List[str],typing.Tuple[str]] = None,
-		) -> None:
-		super().__init__()
-
-		self.__excludeExact = set(excludeExact) if excludeExact is not None else None
-		self.__excludePrefix = list(excludePrefix) if excludePrefix is not None else None
-		self.__excludePostfix = list(excludePostfix) if excludePostfix is not None else None
-	#
 
 	################################################################################################################################
 	## Helper Methods
 	################################################################################################################################
 
-	def _dump(self, ctx:jk_prettyprintobj.DumpCtx):
-		ctx.dumpVar("__excludeExact", self.__excludeExact)
-		ctx.dumpVar("__excludePrefix", self.__excludePrefix)
-		ctx.dumpVar("__excludePostfix", self.__excludePostfix)
+	def _dumpVarNames(self, *extensions:str) -> list:
+		return []
 	#
 
 	################################################################################################################################
@@ -57,19 +67,15 @@ class StdDescendFilter(DescendFilter):
 	################################################################################################################################
 
 	def checkDescend(self, allEntries:typing.Dict[str,DirEntryX], entry:DirEntryX) -> bool:
-		if self.__excludeExact:
-			if entry.fileName in self.__excludeExact:
+		if self.__excludeExts is not None:
+			if self.__excludeExts.check(entry.name):
 				return False
+			return True
 
-		if self.__excludePrefix:
-			for x in self.__excludePrefix:
-				if entry.fileName.startswith(x):
-					return False
-
-		if self.__excludePostfix:
-			for x in self.__excludePostfix:
-				if entry.fileName.endswith(x):
-					return False
+		if self.__includeExts is not None:
+			if self.__includeExts.check(entry.name):
+				return True
+			return False
 
 		return True
 	#

@@ -19,4 +19,6 @@
 * 2024-08-03
 	* Added: StdDescendFilter
 
+* 2025-02-15
+	* Added: DirExtDescendFilter
 
